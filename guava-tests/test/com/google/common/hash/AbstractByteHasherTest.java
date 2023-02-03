@@ -26,7 +26,24 @@ import junit.framework.TestCase;
  *
  * @author Colin Decker
  */
+
 public class AbstractByteHasherTest extends TestCase {
+
+  class AbstractByteHasherTestClass extends AbstractByteHasher {
+    @Override
+    protected void update(byte b) {
+    }
+    @Override
+    public HashCode hash() {
+      return null;
+    }
+  }
+  public void testUpdate() {
+    AbstractByteHasherTestClass myObject = new AbstractByteHasherTestClass();
+    byte[] input = {1, 2, 3};
+    myObject.update(input, 0, input.length);
+    assertEquals(3, input[2]);
+  }
 
   public void testBytes() {
     TestHasher hasher = new TestHasher(); // byte order insignificant here

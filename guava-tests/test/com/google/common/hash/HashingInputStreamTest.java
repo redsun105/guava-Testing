@@ -46,6 +46,15 @@ public class HashingInputStreamTest extends TestCase {
     when(hashFunction.newHasher()).thenReturn(hasher);
   }
 
+  /**
+   * New Test Case - test optimalNumOfBits
+   */
+  public void testOptimalNumOfBits_withPIsZero(){
+    long result = BloomFilter.optimalNumOfBits(1, 0);
+    long expected = 1549;
+    assertEquals(expected, result);
+  }
+
   public void testRead_putSingleByte() throws Exception {
     HashingInputStream in = new HashingInputStream(hashFunction, buffer);
 

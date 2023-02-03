@@ -28,8 +28,8 @@ import com.google.common.testing.EqualsTester;
 import com.google.common.testing.NullPointerTester;
 import com.google.common.testing.SerializableTester;
 import com.google.common.util.concurrent.Uninterruptibles;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+
+import java.io.*;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -39,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 import junit.framework.TestCase;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.junit.Assert;
 
 /**
  * Tests for SimpleGenericBloomFilter and derived BloomFilter views.
@@ -56,6 +57,82 @@ public class BloomFilterTest extends TestCase {
       };
 
   private static final int GOLDEN_PRESENT_KEY = random.get().nextInt();
+
+  /**
+   * New Test Case 1 - test constructor's `numHashFunctions`
+   */
+  public void testBloomFilterConstr() {
+    try {
+      new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), -1, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
+    } catch (Exception e) {
+      Assert.assertEquals("numHashFunctions (%s) must be > 0", "numHashFunctions (%s) must be > 0");
+    }
+  }
+
+  /**
+   * New Test Case 2 - test `isCompatible` - `this != that`
+   */
+  public void testIsCompatible() {
+    BloomFilter bf1 = new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), 2, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
+    BloomFilter bf2 = new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), 1, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
+
+    assertFalse(bf1.isCompatible(bf2));
+  }
+
+
+  public void testToBloomFilterExpectedInsertions() {
+    try {
+      BloomFilter.toBloomFilter(Funnels.unencodedCharsFunnel(), Long.MAX_VALUE, Double.MIN_VALUE);
+    } catch (Exception e) {
+      Assert.assertEquals("Expected insertions (%s) must be >= 0", "Expected insertions (%s) must be >= 0");
+    }
+  }
+
+
+  public void testToBloomFilterFppLargerThanZero() {
+    try {
+      BloomFilter.toBloomFilter(Funnels.unencodedCharsFunnel(), Long.MAX_VALUE, Double.MAX_VALUE);
+    } catch (Exception e) {
+      Assert.assertEquals("False positive probability (%s) must be > 0.0", "False positive probability (%s) must be > 0.0");
+    }
+  }
+
+  public void testToBloomFilterFppLessThanOne() {
+    try {
+      BloomFilter.toBloomFilter(Funnels.unencodedCharsFunnel(), Long.MAX_VALUE, Double.MIN_VALUE);
+    } catch (Exception e) {
+      Assert.assertEquals("False positive probability (%s) must be < 1.0", "False positive probability (%s) must be < 1.0");
+    }
+  }
+
+
+  public void testReadObject() {
+
+    BloomFilter bf1 = new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), 2, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
+    try {
+      bf1.readObject(new ObjectInputStream(new InputStream() {
+        @Override
+        public int read() throws IOException {
+          return 0;
+        }
+      }));
+    } catch (IOException e) {
+      Assert.assertEquals("Use SerializedForm", "Use SerializedForm");
+    }
+  }
+
+  /**
+   * New Test Case - test optimalNumOfBits
+   */
+  public void testOptimalNumOfBits_withPIsZero(){
+    long result = BloomFilter.optimalNumOfBits(1, 0);
+    long expected = 1549;
+    assertEquals(expected, result);
+  }
+
+
+
+
 
   @AndroidIncompatible // OutOfMemoryError
   public void testLargeBloomFilterDoesntOverflow() {

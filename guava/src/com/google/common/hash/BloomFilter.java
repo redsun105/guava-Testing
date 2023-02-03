@@ -121,8 +121,8 @@ public final class BloomFilter<T extends @Nullable Object> implements Predicate<
   private final Strategy strategy;
 
   /** Creates a BloomFilter. */
-  private BloomFilter(
-      LockFreeBitArray bits, int numHashFunctions, Funnel<? super T> funnel, Strategy strategy) {
+  BloomFilter(
+          LockFreeBitArray bits, int numHashFunctions, Funnel<? super T> funnel, Strategy strategy) {
     checkArgument(numHashFunctions > 0, "numHashFunctions (%s) must be > 0", numHashFunctions);
     checkArgument(
         numHashFunctions <= 255, "numHashFunctions (%s) must be <= 255", numHashFunctions);
@@ -540,7 +540,7 @@ public final class BloomFilter<T extends @Nullable Object> implements Predicate<
     return new SerialForm<T>(this);
   }
 
-  private void readObject(ObjectInputStream stream) throws InvalidObjectException {
+  void readObject(ObjectInputStream stream) throws InvalidObjectException {
     throw new InvalidObjectException("Use SerializedForm");
   }
 
