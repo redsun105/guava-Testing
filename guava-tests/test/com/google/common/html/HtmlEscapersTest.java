@@ -117,5 +117,13 @@ public class HtmlEscapersTest extends TestCase {
     assertEquals(expected, output);
   }
 
+  public void testHtmlEscaper_withNull() {
+    try {
+      HtmlEscapers.htmlEscaper().escape(null);
+      fail();
+    } catch (NullPointerException expected) {
+    }
+  }
+
 
 }
