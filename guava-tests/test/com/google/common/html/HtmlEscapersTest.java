@@ -60,4 +60,62 @@ public class HtmlEscapersTest extends TestCase {
             + "1234567890";
     assertSame(s, htmlEscaper().escape(s));
   }
+
+  public void testHtmlEscaper_noEscapingNeeded() {
+    String input = "This is a regular string with no special characters.";
+    String expected = "This is a regular string with no special characters.";
+    String output = HtmlEscapers.htmlEscaper().escape(input);
+    assertEquals(expected, output);
+  }
+
+  public void testHtmlEscaper_emptyInput() {
+    String input = "";
+    String expected = "";
+    String output = HtmlEscapers.htmlEscaper().escape(input);
+    assertEquals(expected, output);
+  }
+
+  public void testHtmlEscaper_escapeQuot() {
+    String input = "\"abcd\"";
+    String expected = "&quot;abcd&quot;";
+    String output = HtmlEscapers.htmlEscaper().escape(input);
+    assertEquals(expected, output);
+  }
+
+  public void testHtmlEscaper_escapeApostrophe() {
+    String input = "\'testcase'";
+    String expected = "&#39;testcase&#39;";
+    String output = HtmlEscapers.htmlEscaper().escape(input);
+    assertEquals(expected, output);
+  }
+
+  public void testHtmlEscaper_escapeAmp() {
+    String input = "a & b & c";
+    String expected = "a &amp; b &amp; c";
+    String output = HtmlEscapers.htmlEscaper().escape(input);
+    assertEquals(expected, output);
+  }
+
+  public void testHtmlEscaper_escapeLt() {
+    String input = "a < b < c";
+    String expected = "a &lt; b &lt; c";
+    String output = HtmlEscapers.htmlEscaper().escape(input);
+    assertEquals(expected, output);
+  }
+
+  public void testHtmlEscaper_escapeGt() {
+    String input = "a > b > c";
+    String expected = "a &gt; b &gt; c";
+    String output = HtmlEscapers.htmlEscaper().escape(input);
+    assertEquals(expected, output);
+  }
+
+  public void testHtmlEscaper_escapeAll() {
+    String input = "a\"b<c>d&e\'fg";
+    String expected = "a&quot;b&lt;c&gt;d&amp;e&#39;fg";
+    String output = HtmlEscapers.htmlEscaper().escape(input);
+    assertEquals(expected, output);
+  }
+
+
 }
