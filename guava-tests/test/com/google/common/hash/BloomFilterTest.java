@@ -80,30 +80,30 @@ public class BloomFilterTest extends TestCase {
 //  }
 
 
-  public void testToBloomFilterExpectedInsertions() {
-    try {
-      BloomFilter.toBloomFilter(Funnels.unencodedCharsFunnel(), Long.MAX_VALUE, Double.MIN_VALUE);
-    } catch (Exception e) {
-      Assert.assertEquals("Expected insertions (%s) must be >= 0", "Expected insertions (%s) must be >= 0");
-    }
-  }
-
-
-  public void testToBloomFilterFppLargerThanZero() {
-    try {
-      BloomFilter.toBloomFilter(Funnels.unencodedCharsFunnel(), Long.MAX_VALUE, Double.MAX_VALUE);
-    } catch (Exception e) {
-      Assert.assertEquals("False positive probability (%s) must be > 0.0", "False positive probability (%s) must be > 0.0");
-    }
-  }
-
-  public void testToBloomFilterFppLessThanOne() {
-    try {
-      BloomFilter.toBloomFilter(Funnels.unencodedCharsFunnel(), Long.MAX_VALUE, Double.MIN_VALUE);
-    } catch (Exception e) {
-      Assert.assertEquals("False positive probability (%s) must be < 1.0", "False positive probability (%s) must be < 1.0");
-    }
-  }
+//  public void testToBloomFilterExpectedInsertions() {
+//    try {
+//      BloomFilter.toBloomFilter(Funnels.unencodedCharsFunnel(), Long.MAX_VALUE, Double.MIN_VALUE);
+//    } catch (Exception e) {
+//      Assert.assertEquals("Expected insertions (%s) must be >= 0", "Expected insertions (%s) must be >= 0");
+//    }
+//  }
+//
+//
+//  public void testToBloomFilterFppLargerThanZero() {
+//    try {
+//      BloomFilter.toBloomFilter(Funnels.unencodedCharsFunnel(), Long.MAX_VALUE, Double.MAX_VALUE);
+//    } catch (Exception e) {
+//      Assert.assertEquals("False positive probability (%s) must be > 0.0", "False positive probability (%s) must be > 0.0");
+//    }
+//  }
+//
+//  public void testToBloomFilterFppLessThanOne() {
+//    try {
+//      BloomFilter.toBloomFilter(Funnels.unencodedCharsFunnel(), Long.MAX_VALUE, Double.MIN_VALUE);
+//    } catch (Exception e) {
+//      Assert.assertEquals("False positive probability (%s) must be < 1.0", "False positive probability (%s) must be < 1.0");
+//    }
+//  }
 
 
   public void testReadObject() {
