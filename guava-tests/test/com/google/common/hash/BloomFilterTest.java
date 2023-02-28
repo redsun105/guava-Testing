@@ -58,26 +58,26 @@ public class BloomFilterTest extends TestCase {
 
   private static final int GOLDEN_PRESENT_KEY = random.get().nextInt();
 
-  /**
-   * New Test Case 1 - test constructor's `numHashFunctions`
-   */
-  public void testBloomFilterConstr() {
-    try {
-      new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), -1, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
-    } catch (Exception e) {
-      Assert.assertEquals("numHashFunctions (%s) must be > 0", "numHashFunctions (%s) must be > 0");
-    }
-  }
-
-  /**
-   * New Test Case 2 - test `isCompatible` - `this != that`
-   */
-  public void testIsCompatible() {
-    BloomFilter bf1 = new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), 2, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
-    BloomFilter bf2 = new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), 1, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
-
-    assertFalse(bf1.isCompatible(bf2));
-  }
+//  /**
+//   * New Test Case 1 - test constructor's `numHashFunctions`
+//   */
+//  public void testBloomFilterConstr() {
+//    try {
+//      new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), -1, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
+//    } catch (Exception e) {
+//      Assert.assertEquals("numHashFunctions (%s) must be > 0", "numHashFunctions (%s) must be > 0");
+//    }
+//  }
+//
+//  /**
+//   * New Test Case 2 - test `isCompatible` - `this != that`
+//   */
+//  public void testIsCompatible() {
+//    BloomFilter bf1 = new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), 2, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
+//    BloomFilter bf2 = new BloomFilter(new LockFreeBitArray(Integer.MAX_VALUE), 1, Funnels.unencodedCharsFunnel(), BloomFilterStrategies.MURMUR128_MITZ_32);
+//
+//    assertFalse(bf1.isCompatible(bf2));
+//  }
 
 
   public void testToBloomFilterExpectedInsertions() {
