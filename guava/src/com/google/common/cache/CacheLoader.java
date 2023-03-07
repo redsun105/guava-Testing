@@ -182,8 +182,7 @@ public abstract class CacheLoader<K, V> {
    * @since 17.0
    */
   @GwtIncompatible // Executor + Futures
-  public static <K, V> CacheLoader<K, V> asyncReloading(
-      final CacheLoader<K, V> loader, final Executor executor) {
+  public static <K, V> CacheLoader<K, V> asyncReloading(final CacheLoader<K, V> loader, final Executor executor) {
     checkNotNull(loader);
     checkNotNull(executor);
     return new CacheLoader<K, V>() {
