@@ -18,6 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.annotations.GwtIncompatible;
+import com.google.common.annotations.J2ktIncompatible;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -34,6 +35,7 @@ import javax.annotation.CheckForNull;
  * @since 9.0
  */
 @GwtCompatible(emulated = true)
+@J2ktIncompatible
 @ElementTypesAreNonnullByDefault
 public final class Enums {
 
@@ -48,7 +50,8 @@ public final class Enums {
    */
   @GwtIncompatible // reflection
   public static Field getField(Enum<?> enumValue) {
-    Class<?> clazz = enumValue.getDeclaringClass();
+    Class<?>
+        clazz = enumValue.getDeclaringClass();
     try {
       return clazz.getDeclaredField(enumValue.name());
     } catch (NoSuchFieldException impossible) {

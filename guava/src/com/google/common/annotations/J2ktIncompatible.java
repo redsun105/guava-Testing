@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The Guava Authors
+ * Copyright (C) 2009 The Guava Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -12,21 +12,20 @@
  * the License.
  */
 
-package com.google.common.io;
+package com.google.common.annotations;
 
-import com.google.common.annotations.GwtIncompatible;
-import com.google.common.annotations.J2ktIncompatible;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Modes for opening a file for writing. The default when mode when none is specified is to truncate
- * the file before writing.
+ * The presence of this annotation on an API indicates that the method may <em>not</em> be used with
+ * J2kt.
  *
- * @author Colin Decker
+ * @since NEXT
  */
-@J2ktIncompatible
-@GwtIncompatible
-@ElementTypesAreNonnullByDefault
-public enum FileWriteMode {
-  /** Specifies that writes to the opened file should append to the end of the file. */
-  APPEND
-}
+@Retention(RetentionPolicy.CLASS)
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
+@GwtCompatible
+public @interface J2ktIncompatible {}
